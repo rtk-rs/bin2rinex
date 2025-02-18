@@ -1,0 +1,21 @@
+[package]
+name = "bin2rinex"
+version = "0.0.1"
+license = "MPL-2.0"
+authors = ["Guillaume W. Bres <guillaume.bressaix@gmail.com>"]
+description = "BINEX stream to RINEX deserializer"
+homepage = "https://github.com/rtk-rs"
+repository = "https://github.com/rtk-rs/bin2rinex"
+keywords = ["geo"] 
+categories = ["science", "science::geo", "command-line-interface", "command-line-utilities"]
+edition = "2021"
+readme = "README.md"
+
+[dependencies]
+flate2 = "1"
+log = "0.4"
+thiserror = "2"
+
+binex = "0.4.0"
+clap = { version = "4.4.13", features = ["derive", "color"] }
+rinex = { version = "=0.17.0-alpha-3", features = ["flate2", "binex"] }
