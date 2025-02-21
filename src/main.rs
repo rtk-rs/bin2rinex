@@ -1,21 +1,20 @@
 mod cli;
 use cli::Cli;
 
-use log::{debug, info};
+use log::info;
 
 use std::{
     fs::File,
     io::Write,
-    path::{Path, PathBuf},
+    //path::{Path, PathBuf},
     str::FromStr,
 };
 
-use flate2::{write::GzEncoder, Compression};
-use thiserror::Error;
+use flate2::write::GzEncoder;
 
 use rinex::{
     prelude::{binex::BIN2RNX, Duration},
-    production::{Postponing, SnapshotMode},
+    production::Postponing,
 };
 
 // Supported output types
@@ -42,21 +41,21 @@ impl Write for Output {
     }
 }
 
-fn workspace(cli: &Cli) -> PathBuf {
-    if let Some(workspace) = cli.workspace() {
-        Path::new(workspace).to_path_buf()
-    } else {
-        Path::new(env!("CARGO_MANIFEST_DIR"))
-            .join("..")
-            .join("WORKSPACE")
-    }
-}
+// fn workspace(cli: &Cli) -> PathBuf {
+//     if let Some(workspace) = cli.workspace() {
+//         Path::new(workspace).to_path_buf()
+//     } else {
+//         Path::new(env!("CARGO_MANIFEST_DIR"))
+//             .join("..")
+//             .join("WORKSPACE")
+//     }
+// }
 
 fn main() {
     let cli = Cli::new();
 
     let fp = cli.input_path();
-    let mut fd = File::open(fp).unwrap_or_else(|e| panic!("failed to open file interface"));
+    let fd = File::open(fp).unwrap_or_else(|e| panic!("failed to open input stream: {}", e));
 
     let mut bin2rnx = BIN2RNX::new_periodic(
         false,

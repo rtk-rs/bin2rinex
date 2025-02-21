@@ -1,5 +1,10 @@
-use binex::prelude::Meta;
-use clap::{Arg, ArgAction, ArgMatches, ColorChoice, Command};
+use clap::{
+    Arg,
+    //ArgAction,
+    ArgMatches,
+    ColorChoice,
+    Command,
+};
 use std::path::{Path, PathBuf};
 
 pub struct Cli {
@@ -18,12 +23,12 @@ impl Cli {
                     .arg_required_else_help(true)
                     .color(ColorChoice::Always)
                     .arg(Arg::new("filepath").help("Input RINEX file").required(true))
-                    .arg(
-                        Arg::new("workspace")
-                            .short('w')
-                            .action(ArgAction::Set)
-                            .help("Define custom workspace."),
-                    )
+                    //.arg(
+                    //    Arg::new("workspace")
+                    //        .short('w')
+                    //        .action(ArgAction::Set)
+                    //        .help("Define custom workspace."),
+                    //)
                     .get_matches()
             },
         }
@@ -31,7 +36,7 @@ impl Cli {
     pub fn input_path(&self) -> PathBuf {
         Path::new(self.matches.get_one::<String>("filepath").unwrap()).to_path_buf()
     }
-    pub fn workspace(&self) -> Option<&String> {
-        self.matches.get_one::<String>("workspace")
-    }
+    // pub fn workspace(&self) -> Option<&String> {
+    //     self.matches.get_one::<String>("workspace")
+    // }
 }
