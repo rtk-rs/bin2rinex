@@ -9,8 +9,8 @@ permissions:
   contents: write
 
 jobs:
-  publish_crates:
-    name: Release Libraries
+  publish:
+    name: Publish
     runs-on: ubuntu-latest
     continue-on-error: true
     if: github.ref_type == 'tag'
